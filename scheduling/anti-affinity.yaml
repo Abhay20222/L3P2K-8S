@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: with-node-affinity
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: kubernets.io/hostname
+                operator: NotIn  # Exist/NotExist is does not care about value its only required key
+                values:
+                  - ip-172-31-22-22
+                  - ip-172-99-88-33
+  containers:
+    - name: with-node-affinity
+      image: registry.k8s.io/pause:2.0
